@@ -1,0 +1,150 @@
+{
+  "status": "done",
+  "assets": {
+    "index.d.ts": {
+      "name": "index.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/index.d.ts"
+    },
+    "components/App/App.d.ts": {
+      "name": "components/App/App.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/App/App.d.ts"
+    },
+    "components/App/AsyncStorage.d.ts": {
+      "name": "components/App/AsyncStorage.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/App/AsyncStorage.d.ts"
+    },
+    "components/App/BaseLayout.d.ts": {
+      "name": "components/App/BaseLayout.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/App/BaseLayout.d.ts"
+    },
+    "components/App/DefaultExport.d.ts": {
+      "name": "components/App/DefaultExport.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/App/DefaultExport.d.ts"
+    },
+    "components/App/Loading.d.ts": {
+      "name": "components/App/Loading.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/App/Loading.d.ts"
+    },
+    "components/App/Modal.d.ts": {
+      "name": "components/App/Modal.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/App/Modal.d.ts"
+    },
+    "components/App/Router.d.ts": {
+      "name": "components/App/Router.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/App/Router.d.ts"
+    },
+    "components/Archives/Archive.d.ts": {
+      "name": "components/Archives/Archive.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/Archive.d.ts"
+    },
+    "components/Archives/ArchivesDetail.d.ts": {
+      "name": "components/Archives/ArchivesDetail.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/ArchivesDetail.d.ts"
+    },
+    "components/Archives/ArchivesList.d.ts": {
+      "name": "components/Archives/ArchivesList.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/ArchivesList.d.ts"
+    },
+    "components/Archives/ArchivesService.d.ts": {
+      "name": "components/Archives/ArchivesService.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/ArchivesService.d.ts"
+    },
+    "components/Archives/Children.d.ts": {
+      "name": "components/Archives/Children.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/Children.d.ts"
+    },
+    "components/Archives/Detail.d.ts": {
+      "name": "components/Archives/Detail.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/Detail.d.ts"
+    },
+    "components/Archives/Form.d.ts": {
+      "name": "components/Archives/Form.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/Form.d.ts"
+    },
+    "components/Archives/Pager.d.ts": {
+      "name": "components/Archives/Pager.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/Pager.d.ts"
+    },
+    "components/Archives/Pagination.d.ts": {
+      "name": "components/Archives/Pagination.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/Pagination.d.ts"
+    },
+    "components/Archives/ScoreComments.d.ts": {
+      "name": "components/Archives/ScoreComments.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/ScoreComments.d.ts"
+    },
+    "components/Auth/AppStack.d.ts": {
+      "name": "components/Auth/AppStack.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/AppStack.d.ts"
+    },
+    "components/Auth/AuthContext.d.ts": {
+      "name": "components/Auth/AuthContext.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/AuthContext.d.ts"
+    },
+    "components/Auth/AuthForm.d.ts": {
+      "name": "components/Auth/AuthForm.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/AuthForm.d.ts"
+    },
+    "components/Auth/AuthProvider.d.ts": {
+      "name": "components/Auth/AuthProvider.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/AuthProvider.d.ts"
+    },
+    "components/Auth/AuthStack.d.ts": {
+      "name": "components/Auth/AuthStack.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/AuthStack.d.ts"
+    },
+    "components/Auth/LoginForm.d.ts": {
+      "name": "components/Auth/LoginForm.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/LoginForm.d.ts"
+    },
+    "components/Auth/PasswordChangeDone.d.ts": {
+      "name": "components/Auth/PasswordChangeDone.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/PasswordChangeDone.d.ts"
+    },
+    "components/Auth/PasswordChangeForm.d.ts": {
+      "name": "components/Auth/PasswordChangeForm.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/PasswordChangeForm.d.ts"
+    },
+    "components/Auth/PasswordResetComplete.d.ts": {
+      "name": "components/Auth/PasswordResetComplete.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/PasswordResetComplete.d.ts"
+    },
+    "components/Auth/PasswordResetConfirm.d.ts": {
+      "name": "components/Auth/PasswordResetConfirm.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/PasswordResetConfirm.d.ts"
+    },
+    "components/Auth/PasswordResetDone.d.ts": {
+      "name": "components/Auth/PasswordResetDone.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/PasswordResetDone.d.ts"
+    },
+    "components/Auth/PasswordResetEmailSent.d.ts": {
+      "name": "components/Auth/PasswordResetEmailSent.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/PasswordResetEmailSent.d.ts"
+    },
+    "components/Auth/PasswordResetForm.d.ts": {
+      "name": "components/Auth/PasswordResetForm.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/PasswordResetForm.d.ts"
+    },
+    "components/Auth/SignupForm.d.ts": {
+      "name": "components/Auth/SignupForm.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/SignupForm.d.ts"
+    },
+    "components/Auth/useAuth.d.ts": {
+      "name": "components/Auth/useAuth.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/useAuth.d.ts"
+    },
+    "main.a2b3ab74c7172c9bc53c.js.LICENSE.txt": {
+      "name": "main.a2b3ab74c7172c9bc53c.js.LICENSE.txt",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/main.a2b3ab74c7172c9bc53c.js.LICENSE.txt"
+    },
+    "main.a2b3ab74c7172c9bc53c.js": {
+      "name": "main.a2b3ab74c7172c9bc53c.js",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/main.a2b3ab74c7172c9bc53c.js"
+    }
+  },
+  "chunks": {
+    "main": [
+      "main.a2b3ab74c7172c9bc53c.js"
+    ]
+  }
+}

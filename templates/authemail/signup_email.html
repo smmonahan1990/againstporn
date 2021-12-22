@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en-US">
+{% load custom_tags_users %}
+<head>
+    <meta charset="UTF-8" />
+    <title>Thank you for signing up!</title>
+</head>
+<body>
+<p>
+Verify your email address by clicking on this link:<br>
+{% with "https://againstporn.org/api/accounts/signup/verify/?code="|add:code as var %}
+{{ var|condition_on_env }}
+{% endwith %}
+</p>
+</body>
+</html>
