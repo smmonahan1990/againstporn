@@ -3,8 +3,7 @@ from django.dispatch import receiver
 from django.core.signals import request_started
 from django.db.models.signals import post_save, post_delete
 from authemail.models import SignupCode, PasswordResetCode
-import logging
-import pprint as pp
+import logging, pprint as pp
 from datetime import datetime as dt, timezone as tz
 
 logger = logging.getLogger(__name__)
@@ -29,7 +28,7 @@ def account_created(sender, instance, **kwargs):
 
 @receiver(post_save, sender=PasswordResetCode)
 def password_reset_code_created(sender, instance, **kwargs):
-    logger.debug('Password reset code %d generated for %s' % (instance.id, instance.user.email))
+    logger.debug('Password reset code %s generated for %s' % (instance.pk, instance.user.email))
 
 @receiver(post_delete, sender=PasswordResetCode)
 def password_reset_code_deleted(sender, instance, **kwargs):
@@ -55,11 +54,15 @@ def signup_code_deleted(sender, instance, **kwargs):
         )
     ))
 
-#@receiver(request_started)
-#def inspect_request(sender, environ, **kwargs):
-#    logger.debug(
-#        pp.pformat(
-#            environ,
-#        )
-#    )
-#
+@receiver(auth.user_login_failed)
+def login_failed(sender, request, credentials, **kwargs):
+    try:
+        logger.debug('Login attempt failed for user %s from remote address %s.' % (
+            credentials['email'],
+            request.META['REMOTE_ADDR'],
+        ))
+    except AttributeError as e:
+        logger.error('%s : %s' , e, pp.pformat(locals()))
+    except Exception as e:
+        logger.error('%s: %s', e, pp.pformat(locals()))
+

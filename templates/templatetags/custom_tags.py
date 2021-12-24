@@ -11,7 +11,8 @@ def clean_selftext(string):
     new_string = re.sub('(?m:^“ ?(.+?)(?:[”“]\s*$))',lambda x: '&gt;{}\n\n'.format(x.group(1)),new_string)
     new_string = re.sub('(?m:(?<=^&gt; )(\s+)|(^&gt;\s+$))','',new_string)
     new_string = re.sub('(?:\s*\n\s*){3,}','\n\n',new_string)
-    new_string = re.sub('(?m:(^|(?:(?<!\])\()|\s)(https?://(?:([^\s\(\)]+?)|(\S*?\([^\s\)]+?\)\S*?)))([^\w/]?(?=\s|$)))',lambda x: '%s[%s](%s)%s' % (x.group(1),x.group(2),x.group(2),x.group(5)),new_string)
+    new_string = re.sub('(?m:(^|(?:(?<!\])\()|\s)(https?://(?:([^\]\s]+?)))([^\w/]?(?=\s|$)))',lambda x: '%s[%s](%s)%s' % (x.group(1),x.group(2),x.group(2),x.group(4)),new_string)
+#    new_string = re.sub('(?m:(^|(?:(?<!\])\()|\s)(https?://(?:([^\s\(\)]+?)|(\S*?\([^\s\)]+?\)\S*?)))([^\w/]?(?=\s|$)))',lambda x: '%s[%s](%s)%s' % (x.group(1),x.group(2),x.group(2),x.group(5)),new_string)
     return new_string
 styles = {'~~(.+?)~~':'del',
     '\B\*\*([^\*\n]+)\*\*\B':'b',

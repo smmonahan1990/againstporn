@@ -19,7 +19,9 @@ declare type AuthContextData = {
   signOut(): Promise<void>;
   signUp(authData: AuthData): Promise<void>;
   confirmPasswordReset(authData: AuthData): Promise<void>;
+  confirmPasswordChange(): Promise<void>;
   resetPassword(authData: AuthData): Promise<void>;
+  changePassword(authData: AuthData): Promise<void>;
   modeHandler?: ModeHandler;
 };
     

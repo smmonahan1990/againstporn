@@ -1,7 +1,10 @@
 import useAuth from "./useAuth";
 
 export default function AppStack() {
-  const { authData, signOut } = useAuth();
+  const { authData, 
+          signOut, 
+          modeHandler: { setMode }
+        } = useAuth();
   const authString = !authData ? 'new user' : authData?.email;
   return (
     <ul className="navbar-nav ml-auto">
@@ -24,7 +27,7 @@ export default function AppStack() {
             Create a new post
           </button>
           <div className="dropdown-divider"></div>
-          <button className="dropdown-item">
+          <button className="dropdown-item" onClick={() => setMode(8)}>
             Change password
           </button>
           <div className="dropdown-divider"></div>

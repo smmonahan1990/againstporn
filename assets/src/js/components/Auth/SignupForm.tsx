@@ -9,7 +9,7 @@ async function signupUser(credentials: any) {
   const api_url =
     process.env.NODE_ENV === "production"
       ? url
-      : url.replace("/api", ":8000/api");
+      : url.replace("https://againstporn.org", "http://34.225.127.212:8000");
   return fetch(api_url,{
     method: 'POST',
     headers: {

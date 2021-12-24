@@ -33,6 +33,9 @@ def betadata(x):
     a = []
     b = 0
     for i in u:
+        if not re.search('[\'"]\s?:',i):
+            a = a[:-1] + [a[-1]+', '+ i]
+            continue
         i = fix(i,b)
         v = '    '*b
         b += i.count('{')+i.count('[')-i.count('}')-i.count(']')
@@ -79,3 +82,4 @@ def prep_req(method="GET"):
         except Exception as e:
             print(e)
     return req
+

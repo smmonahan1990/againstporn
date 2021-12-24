@@ -13,6 +13,7 @@ const CustomModal = () => {
   const PasswordResetForm = React.lazy(() => import("../Auth/PasswordResetForm"));
   const PasswordResetEmailSent = React.lazy(() => import("../Auth/PasswordResetEmailSent"));
   const PasswordResetComplete = React.lazy(() => import("../Auth/PasswordResetComplete"));
+  const PasswordChangeConfirmForm = React.lazy(() => import('../Auth/PasswordChangeConfirm'));
   const UnverifiedUser = React.lazy(() => import('./DefaultExport'));
   function swapForm(init: number) {
     if (init === 1) 
@@ -36,6 +37,8 @@ const CustomModal = () => {
       return {header: 'Reset your password', fragA: '', fragB: ''}
     } else if (init === 7) {
       return {header: "Success.", fragA: '', fragB: 'Log me in!'}
+    } else if (init === 8 || init === 9) {
+      return {header: "Change your password", fragA: '...or', fragB: 'cancel'}
     } else {
       return {header: 'Bye then', fragA: '', fragB: ''}
     }
@@ -49,7 +52,9 @@ const CustomModal = () => {
   const verificationEmailSent = mode === 5;
   const passwordResetCodeVerified = mode === 6;
   const passwordResetComplete = mode === 7;
-  const color = mode === 3 ? 'var(--secondary)' : 'var(--primary)';
+  const passwordChangeConfirm = mode === 8;
+  const passwordChangeVerified = mode === 9;
+  const color = (mode === 3 || mode === 8) ? 'var(--secondary)' : 'var(--primary)';
   return (
     
     <Modal isOpen={!!mode}>
@@ -66,6 +71,8 @@ const CustomModal = () => {
          {verificationEmailSent && <UnverifiedUser />}
          {passwordResetCodeVerified && <PasswordResetForm />}
          {passwordResetComplete && <PasswordResetComplete />}
+         {passwordChangeConfirm && <PasswordChangeConfirmForm />}
+         {passwordChangeVerified && <div className="text-center">Lol</div>}
         </>
         }
        </Suspense>

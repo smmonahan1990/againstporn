@@ -23,11 +23,11 @@ class CustomLogin(views.Login):
     def post(self, request, format=None, **kwargs):
         response = super().post(request, format, **kwargs)
         try:
-            user = auth.authenticate(**request.data)
+            user = auth.authenticate(request=request, **request.data)
         except TypeError:
             try:
                 cred = {'email':request.data['email'][0], 'password':request.data['password'][0]}
-                user = auth.authenticate(**cred)
+                user = auth.authenticate(request=request, **cred)
             except (KeyError, TypeError):
                 user = None
         if user:
@@ -38,7 +38,6 @@ from rest_framework import exceptions
 class CustomLogout(views.Logout):
 
     def get(self, request, format=None, **kwargs):
-        logger.info(pp.pformat(request.META))
         response = super().get(request, format, **kwargs)
         auth.logout(request)
         return response
@@ -92,3 +91,19 @@ class CustomPasswordResetVerified(views.PasswordResetVerified):
             return super().post(request, format)
         except Exception as e:
             return Response({'detail':e}, status=status.HTTP_400_BAD_REQUEST)
+
+class CustomPasswordChange(views.PasswordChange):
+
+    def post(self, request, format=None):
+        if request.data.get('verify'):
+            try:
+                user, _ = TA().authenticate(request)
+                user.check_password(request.data['verify'])
+                if user:
+                    return Response({'success':'user verified.'}, status=status.HTTP_200_OK)
+            except TypeError:
+                pass
+            return Response({'detail':'Unable to verify user with the given credentials.'}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return super().post(request, format)
+

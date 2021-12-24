@@ -10,7 +10,7 @@ async function logoutUser(token: string) {
     const api_url = 
         process.env.NODE_ENV === 'production' 
         ? url 
-        : url.replace('/api', ':8000/api');
+        : url.replace('https://againstporn.org', 'http://34.225.127.212:8000');
     return fetch(api_url, {
         method: 'GET',
         headers: {
@@ -27,7 +27,7 @@ async function checkStatus(path: string, data: string): Promise<any> {
     const api_url = 
         process.env.NODE_ENV === 'production'
         ? url 
-        : url.replace('/api', ':8000/api');
+        : url.replace('https://againstporn.org', 'http://34.225.127.212:8000');
     return fetch(api_url, {
         method: 'POST',
         headers: {
@@ -114,6 +114,18 @@ export const AuthProvider: React.FC = ({ children }) => {
     await AsyncLocalStorage.setItem('@AuthData', JSON.stringify(_authData));
     setLoading(false);
   }
+
+  const confirmPasswordChange = async () => {
+    setMode(9);
+    setLoading(false);
+  }
+
+  const changePassword = async(_authData: AuthData) => {
+    setMode(10);
+    await AsyncLocalStorage.setItem('@AuthData', JSON.stringify(_authData));
+    setLoading(false);
+  };
+
   return (
     <AuthContext.Provider 
      value={{ authData,
@@ -123,8 +135,10 @@ export const AuthProvider: React.FC = ({ children }) => {
               signOut,
               signUp,
               confirmPasswordReset,
+              confirmPasswordChange,
               resetPassword,
-              modeHandler
+              changePassword,
+              modeHandler,
       }}
     >
       {children}

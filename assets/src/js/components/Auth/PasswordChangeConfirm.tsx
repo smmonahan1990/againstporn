@@ -4,8 +4,9 @@ import Button from "react-bootstrap/Button";
 import React, { useState } from 'react';
 import useAuth from './useAuth';
 
-async function resetPassword(data: any) {
-  const url = "https://againstporn.org/api/accounts/password/reset/";
+async function changePassword(data: any) {
+  const { authData }  = useAuth();
+  const url = "https://againstporn.org/api/accounts/password/change/";
   const api_url =
     process.env.NODE_ENV === "production"
       ? url
@@ -13,7 +14,8 @@ async function resetPassword(data: any) {
   return fetch(api_url,{
     method: 'POST',
     headers: {
-     'Content-Type': 'application/json'
+     'Content-Type': 'application/json',
+     'Authorization': 'Token ' + authData?.token
     },
     body: JSON.stringify(data)
   })
@@ -21,38 +23,38 @@ async function resetPassword(data: any) {
    .catch((err) => console.log(err));
 }
 
-const PasswordResetConfirmForm = () => {
-  const { confirmPasswordReset,
-          setLoading
+const PasswordChangeConfirmForm = () => {
+  const { confirmPasswordChange,
+          setLoading,
   } = useAuth();
   const { register, handleSubmit } = useForm();
   const [failure, setFailure] = useState('');
   const onSubmit = async (data: any, e: any) => {
     e.preventDefault();
-    const response = await resetPassword(data);
+    const response = await changePassword(data);
     if (typeof response?.detail !== 'undefined') {
       setFailure(response.detail);
     }
-    else if (typeof response?.email === 'object') {
-      setFailure(response.email[0]);
-    }
     else {
       setLoading(true);
-      await confirmPasswordReset({email: data.email, token: undefined, verificationStatus: 'pendingPasswordReset'}) 
+      await confirmPasswordChange(); 
     }
     return {failure: failure};
   } 
   return (
      <>
-      <div className="col-8 offset-2 text-center mb-3">Enter your email address below, and we'll email instructions for setting a new one.</div>
+      <div className="col-8 offset-2 text-center mb-3">
+	<h6>You are about to change your password.</h6>
+	<p>Please enter your current password to verify your identity.</p>
+      </div>
       <Form onSubmit={handleSubmit(onSubmit)}>
        <Form.Group className="mb-3 mt-3 offset-3 w-50 d-flex flex-wrap" controlId="formBasicEmail">
          <Form.Label className="visually-hidden">Email address</Form.Label>
           <Form.Control
-            {...register("email")}
+            {...register("verify")}
             type="email"
-            placeholder="Email address"
-            autoComplete="email"
+            placeholder="Password"
+            autoComplete="password"
             className="mb-3 mt-3" 
           />
           {failure && 
@@ -62,8 +64,8 @@ const PasswordResetConfirmForm = () => {
               </Form.Control.Feedback>
              </>
            }
-         <Button variant="success" className="flex-grow-1 mt-2" type="submit">
-           Send me instructions!
+         <Button variant="info" className="flex-grow-1 mt-2" type="submit">
+           Submit
          </Button>
        </Form.Group>
       </Form>
@@ -71,4 +73,4 @@ const PasswordResetConfirmForm = () => {
   );
 };
 
-export default PasswordResetConfirmForm;
+export default PasswordChangeConfirmForm;
