@@ -97,6 +97,10 @@
       "name": "components/Auth/LoginForm.d.ts",
       "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/LoginForm.d.ts"
     },
+    "components/Auth/PasswordChangeConfirm.d.ts": {
+      "name": "components/Auth/PasswordChangeConfirm.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/PasswordChangeConfirm.d.ts"
+    },
     "components/Auth/PasswordChangeDone.d.ts": {
       "name": "components/Auth/PasswordChangeDone.d.ts",
       "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/PasswordChangeDone.d.ts"
@@ -112,10 +116,6 @@
     "components/Auth/PasswordResetConfirm.d.ts": {
       "name": "components/Auth/PasswordResetConfirm.d.ts",
       "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/PasswordResetConfirm.d.ts"
-    },
-    "components/Auth/PasswordResetDone.d.ts": {
-      "name": "components/Auth/PasswordResetDone.d.ts",
-      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/PasswordResetDone.d.ts"
     },
     "components/Auth/PasswordResetEmailSent.d.ts": {
       "name": "components/Auth/PasswordResetEmailSent.d.ts",
@@ -133,18 +133,18 @@
       "name": "components/Auth/useAuth.d.ts",
       "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/useAuth.d.ts"
     },
-    "main.a2b3ab74c7172c9bc53c.js.LICENSE.txt": {
-      "name": "main.a2b3ab74c7172c9bc53c.js.LICENSE.txt",
-      "path": "/opt/bitnami/projects/reactdev/assets/dist/main.a2b3ab74c7172c9bc53c.js.LICENSE.txt"
+    "main.ef26f55d5360e5cbc919.js.LICENSE.txt": {
+      "name": "main.ef26f55d5360e5cbc919.js.LICENSE.txt",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/main.ef26f55d5360e5cbc919.js.LICENSE.txt"
     },
-    "main.a2b3ab74c7172c9bc53c.js": {
-      "name": "main.a2b3ab74c7172c9bc53c.js",
-      "path": "/opt/bitnami/projects/reactdev/assets/dist/main.a2b3ab74c7172c9bc53c.js"
+    "main.ef26f55d5360e5cbc919.js": {
+      "name": "main.ef26f55d5360e5cbc919.js",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/main.ef26f55d5360e5cbc919.js"
     }
   },
   "chunks": {
     "main": [
-      "main.a2b3ab74c7172c9bc53c.js"
+      "main.ef26f55d5360e5cbc919.js"
     ]
   }
 }

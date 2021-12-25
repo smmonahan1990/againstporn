@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomModal from '../App/Modal';
+//import CustomModal from '../App/Modal';
 import useAuth from '../Auth/useAuth';
 
 interface Fancy {
@@ -22,16 +22,13 @@ export default function AuthStack(): JSX.Element {
      </button>
     )
   });
-  const ref1 = React.createRef();
-  const ref2 = React.createRef();
+  const ref = React.createRef();
+//  const ref2 = React.createRef();
   return (
-   <>
     <form className="form-inline ml-auto">
-     <FancyButton css="btn btn-outline-secondary" value={1} inner="Log in" ref={ref1} />
-     <FancyButton css="btn btn-primary ml-2" value={2} inner="Sign Up" ref={ref2} />
+     <FancyButton css="btn btn-outline-secondary" value={1} inner="Log in" ref={ref} />
+     <FancyButton css="btn btn-primary ml-2" value={2} inner="Sign Up" ref={ref} />
     </form>
-     <CustomModal />
-   </>
   )
 }
   

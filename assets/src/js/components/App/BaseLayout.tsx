@@ -1,5 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 import { Suspense, lazy } from 'react';
+import Modal from './Modal';
 
 const AuthForm = lazy(() => import("../Auth/AuthForm"));
 const ArchivesList = lazy(() => import("../Archives/ArchivesList"));
@@ -58,6 +59,7 @@ const BaseLayout = () => (
       <NavLink path="/antikink/" label="AntiKink" />
       <NavLink path="/antipornography/" label="AntiPornography" />
     </div>
+    <Modal />
   </div>
 );
 

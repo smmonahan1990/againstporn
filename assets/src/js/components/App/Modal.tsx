@@ -14,6 +14,8 @@ const CustomModal = () => {
   const PasswordResetEmailSent = React.lazy(() => import("../Auth/PasswordResetEmailSent"));
   const PasswordResetComplete = React.lazy(() => import("../Auth/PasswordResetComplete"));
   const PasswordChangeConfirmForm = React.lazy(() => import('../Auth/PasswordChangeConfirm'));
+  const PasswordChangeForm = React.lazy(() => import('../Auth/PasswordChangeForm'));
+  const PasswordChangeDone = React.lazy(() => import('../Auth/PasswordChangeDone'));
   const UnverifiedUser = React.lazy(() => import('./DefaultExport'));
   function swapForm(init: number) {
     if (init === 1) 
@@ -39,9 +41,10 @@ const CustomModal = () => {
       return {header: "Success.", fragA: '', fragB: 'Log me in!'}
     } else if (init === 8 || init === 9) {
       return {header: "Change your password", fragA: '...or', fragB: 'cancel'}
-    } else {
+    } else if (init === 10) {
+      return {header: "Password change successful", fragA: '', fragB: 'Great.'}
+    } else
       return {header: 'Bye then', fragA: '', fragB: ''}
-    }
   }
 
   const { header, fragA, fragB } = formvars(mode);
@@ -54,7 +57,8 @@ const CustomModal = () => {
   const passwordResetComplete = mode === 7;
   const passwordChangeConfirm = mode === 8;
   const passwordChangeVerified = mode === 9;
-  const color = (mode === 3 || mode === 8) ? 'var(--secondary)' : 'var(--primary)';
+  const passwordChangeDone = mode === 10;
+  const color = (mode === 3 || mode === 8 || mode === 9) ? 'var(--secondary)' : 'var(--primary)';
   return (
     
     <Modal isOpen={!!mode}>
@@ -72,7 +76,8 @@ const CustomModal = () => {
          {passwordResetCodeVerified && <PasswordResetForm />}
          {passwordResetComplete && <PasswordResetComplete />}
          {passwordChangeConfirm && <PasswordChangeConfirmForm />}
-         {passwordChangeVerified && <div className="text-center">Lol</div>}
+         {passwordChangeVerified && <PasswordChangeForm />}
+         {passwordChangeDone && <PasswordChangeDone />}
         </>
         }
        </Suspense>

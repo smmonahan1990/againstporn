@@ -120,9 +120,8 @@ export const AuthProvider: React.FC = ({ children }) => {
     setLoading(false);
   }
 
-  const changePassword = async(_authData: AuthData) => {
+  const changePassword = async() => {
     setMode(10);
-    await AsyncLocalStorage.setItem('@AuthData', JSON.stringify(_authData));
     setLoading(false);
   };
 

@@ -6,10 +6,10 @@ import json
 NANO = '/usr/bin/nano'
 nano = lambda x: os.spawnv(0, NANO, (NANO, x))
 
-base_csv = 'csv/%s.csv'
+base_csv = 'csv/%s/%s.csv'
 def metadata(obj, pp=False):
   try:
-    file = pd.read_csv(base_csv % obj._meta.model_name)
+    file = pd.read_csv(base_csv % (obj.name.lower(),obj._meta.model_name))
     row = file.loc[file['id']==obj.id]
     cols = sorted(list(set(row.columns).difference({'selftext'})))
     st = row.selftext.to_list()[0]
@@ -36,15 +36,16 @@ def betadata(x):
         if not re.search('[\'"]\s?:',i):
             a = a[:-1] + [a[-1]+', '+ i]
             continue
-        i = fix(i,b)
+        n, i = fix(i,b)
         v = '    '*b
-        b += i.count('{')+i.count('[')-i.count('}')-i.count(']')
+        b += n
+#        b += i.count('{')+i.count('[')-i.count('}')-i.count(']')
         a.append(v+i)
     a.extend(['' if not st else st[1:-1]])
     return '{\n%s}' % ',\n'.join(a)
 
 def fix(z,b=0):
-    y = re.findall('\{|\[',z)
+    y = re.findall('\{(?!\})|\[(?!\])',z)
     if y:
         x = re.split('\{|\[',z)
         n = [x[0]]
@@ -52,7 +53,7 @@ def fix(z,b=0):
             n.append(y[i]+'\n'+'    '*(b+i+1))
             n.append(x[i+1])
         z = ''.join(n)
-    a = re.findall('\}|\]',z)
+    a = re.findall('(?<!\{)\}|(?<!\[)\]',z)
     if a:
         x = re.split('\}|\]',z)
         n = [x[0]]
@@ -64,7 +65,7 @@ def fix(z,b=0):
             n.append('\n' +'    '*(c-t[i-1])+a[i-1])
             n.append(x[i-1])
         z=''.join(n)
-    return z
+    return len(y) - len(a), z
 
 def prep_req(method="GET"):
     from reactdev.settings import MIDDLEWARE

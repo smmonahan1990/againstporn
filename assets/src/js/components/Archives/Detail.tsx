@@ -37,7 +37,7 @@ export default function Detail(props) {
   {selftext !== null && parse(selftext || '')}
   {fullsize !== null && fullsize !== undefined &&
    <>
-    <div className="d-flex justify-content-center">
+    <div className="d-flex justify-content-center" style={{ paddingBlock: (nsfw ? '15px' : 'unset') }}>
      {nsfw && 
        <div id="nsfw" onClick={() => {
          $("#nsfw")[0].classList.toggle("d-none");

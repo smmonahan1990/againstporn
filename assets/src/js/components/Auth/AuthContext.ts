@@ -21,7 +21,7 @@ declare type AuthContextData = {
   confirmPasswordReset(authData: AuthData): Promise<void>;
   confirmPasswordChange(): Promise<void>;
   resetPassword(authData: AuthData): Promise<void>;
-  changePassword(authData: AuthData): Promise<void>;
+  changePassword(): Promise<void>;
   modeHandler?: ModeHandler;
 };
     

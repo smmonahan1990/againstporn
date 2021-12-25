@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import useAuth from './useAuth';
 
 async function changePassword(data: any) {
-  const { authData }  = useAuth();
   const url = "https://againstporn.org/api/accounts/password/change/";
   const api_url =
     process.env.NODE_ENV === "production"
@@ -15,7 +14,7 @@ async function changePassword(data: any) {
     method: 'POST',
     headers: {
      'Content-Type': 'application/json',
-     'Authorization': 'Token ' + authData?.token
+     'Authorization': 'Token ' + data?.token
     },
     body: JSON.stringify(data)
   })
@@ -26,12 +25,14 @@ async function changePassword(data: any) {
 const PasswordChangeConfirmForm = () => {
   const { confirmPasswordChange,
           setLoading,
+          authData
   } = useAuth();
   const { register, handleSubmit } = useForm();
   const [failure, setFailure] = useState('');
   const onSubmit = async (data: any, e: any) => {
     e.preventDefault();
     const response = await changePassword(data);
+//    const response = await changePassword({ verify: data?.verify, token: authData?.token });
     if (typeof response?.detail !== 'undefined') {
       setFailure(response.detail);
     }
@@ -44,7 +45,7 @@ const PasswordChangeConfirmForm = () => {
   return (
      <>
       <div className="col-8 offset-2 text-center mb-3">
-	<h6>You are about to change your password.</h6>
+	<h5>You are about to change your password.</h5>
 	<p>Please enter your current password to verify your identity.</p>
       </div>
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -52,7 +53,7 @@ const PasswordChangeConfirmForm = () => {
          <Form.Label className="visually-hidden">Email address</Form.Label>
           <Form.Control
             {...register("verify")}
-            type="email"
+            type="password"
             placeholder="Password"
             autoComplete="password"
             className="mb-3 mt-3" 
@@ -64,6 +65,7 @@ const PasswordChangeConfirmForm = () => {
               </Form.Control.Feedback>
              </>
            }
+         <input type="hidden" {...register("token")} value={authData?.token} />
          <Button variant="info" className="flex-grow-1 mt-2" type="submit">
            Submit
          </Button>

@@ -4,8 +4,8 @@ import Button from "react-bootstrap/Button";
 import React, { useState } from 'react';
 import useAuth from './useAuth';
 
-async function passwordChangeVerified(data) {
-  const url = "https://againstporn.org/api/accounts/password/reset/verified/";
+async function passwordChangeVerified(data: any) {
+  const url = "https://againstporn.org/api/accounts/password/change/";
   const api_url =
     process.env.NODE_ENV === "production"
       ? url
@@ -13,7 +13,8 @@ async function passwordChangeVerified(data) {
   return fetch(api_url,{
     method: 'POST',
     headers: {
-     'Content-Type': 'application/json'
+     'Content-Type': 'application/json',
+     'Authorization': 'Token ' + data?.token
     },
     body: JSON.stringify(data)
   })
@@ -43,12 +44,13 @@ const PasswordChangeForm = () => {
     } 
     else {
       const response = await passwordChangeVerified(data);
+//      const response = await passwordChangeVerified({password: data?.password, token: authData?.token});
       if (typeof response?.detail !== 'undefined') {
         setFailure(response.detail);
       }
-      else if (!!response?.token) {
+      else if (!!response?.success) {
         setLoading(true);
-        await changePassword({ email: authData?.email, response?.token, verificationStatus: ''});
+        await changePassword();
       }
       else {
         setFailure('There was an error.');
@@ -98,6 +100,7 @@ const PasswordChangeForm = () => {
               </Form.Control.Feedback>
              </>
            }
+          <input type="hidden" {...register("token")} value={authData?.token} />
          <Button variant="success" className="flex-grow-1 mt-2" type="submit">
            Change my password!
          </Button>

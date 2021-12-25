@@ -1,4 +1,5 @@
 import useAuth from "./useAuth";
+//import Modal from '../App/Modal';
 
 export default function AppStack() {
   const { authData, 

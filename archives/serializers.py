@@ -1,16 +1,7 @@
 from rest_framework import serializers
 from templates.templatetags.custom_tags import apply_styles, embedded
 from django.template.defaultfilters import linebreaks, mark_safe
-import logging, re
-logger = logging.getLogger('django.request')
-
-def format_text(text):
-    text = text.replace('<blockquote>','</p><blockquote>')
-    text = text.replace('</blockquote>','</blockquote><p>')
-    text = text.replace('</p></p><blockquote>','</p><blockquote>')
-    text = text.replace('</blockquote><p><p>','</blockquote><p>')
-    text = re.sub('^</p><blockquote>','<blockquote>',text)
-    return text
+import re
 
 # serialize posts
 
@@ -22,7 +13,6 @@ def PSerializer(post_model, **kwargs):
         if obj.selftext is not None:
             styles = 'class="d-flex justify-content-center align-items-center"'
             st = linebreaks(apply_styles(embedded(obj))).replace('<p><iframe',f'<p {styles}><iframe')
-#            st = format_text(st)
             if re.search('class="(imgur|twitter)', st):
                 st = mark_safe(f'<div {styles}>{st}</div>')
             return st

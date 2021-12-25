@@ -8,6 +8,7 @@ from .managers import ArchiveManager
 
 class Archive(models.Model):
     name = ''
+#    nsfw = models.BooleanField(null=True, blank=True)
     selftext = models.TextField(null=True,blank=True)
     fullsize = models.CharField(max_length=255,null=True,blank=True)
     thumbnail = models.CharField(max_length=255,null=True,blank=True)
