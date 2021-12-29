@@ -37,10 +37,13 @@ const BaseLayout = () => (
       </button>
       <div className="flex-grow-1 collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul className="navbar-nav mr-auto">
-          <NavLink path="/antikink/" label="AntiKink" />
-          <NavLink path="/antipornography/" label="AntiPornography" />
+         <NavLink path="/antikink/" label="AntiKink" />
+         <NavLink path="/antipornography/" label="AntiPornography" />
+         <NavLink path="/pornfreewomen/" label="PornFreeWomen" />
+         <NavLink path="/pornhateswomen/" label="PornHatesWomen" />
+         <NavLink path="/pornfree/" label="PornFree" />
         </ul>
-        <Suspense fallback={<div className="d-flex justify-content-center">Loading...</div>}>
+        <Suspense fallback={<div className="d-flex align-items-center">Loading...</div>}>
         <AuthForm />
         </Suspense>
       </div>
@@ -50,14 +53,23 @@ const BaseLayout = () => (
       <Switch>
        <Route path="/antikink/" exact component={ArchivesList} />
        <Route path="/antipornography/" exact component={ArchivesList} />
+       <Route path="/pornfreewomen/" exact component={ArchivesList} />
+       <Route path="/pornhateswomen/" exact component={ArchivesList} />
+       <Route path="/pornfree/" exact component={ArchivesList} />
        <Route path="/antikink/:id/" component={ArchivesDetail} />
        <Route path="/antipornography/:id/" component={ArchivesDetail} />
+       <Route path="/pornfreewomen/:id/" component={ArchivesDetail} />
+       <Route path="/pornhateswomen/:id" component={ArchivesDetail} />
+       <Route path="/pornfree/:id" component={ArchivesDetail} />
       </Switch>
     </Suspense>
     </div>
     <div className="footer">
       <NavLink path="/antikink/" label="AntiKink" />
       <NavLink path="/antipornography/" label="AntiPornography" />
+      <NavLink path="/pornfreewomen/" label="PornFreeWomen" />
+      <NavLink path="/pornhateswomen/" label="PornHatesWomen" />
+      <NavLink path="/pornfree/" label="PornFree" />
     </div>
     <Modal />
   </div>

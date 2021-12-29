@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib import admin
 from django.contrib.admin import register
-from .models import Report
+from .models import Report, choices
 from .forms import ReportForm
 from django.http import HttpResponse
 # Register your models here.
@@ -25,3 +25,7 @@ class ReportListFilter(admin.SimpleListFilter):
 class AdminReport(admin.ModelAdmin):
     form = ReportForm
     list_filter = (ReportListFilter,)
+
+@register(*[i for i, j in choices])
+class ArchiveAdmin(admin.ModelAdmin):
+    pass

@@ -2,7 +2,7 @@ import parse from 'html-react-parser';
 import { useState } from 'react';
 
 export default function Comment({ comment, i=0 }) {
-  const { id, body, author, text, score, children, date } = comment;
+  const { id, body, author, text, score, children, awards, date } = comment;
   const c = i === 0 ? 'post-comment w-100' : 'w-100';
   const d = i === 0 ? '' : 'post-comment-child nested-'+i;
   const deleted = (body === '<p>[deleted]</p>' || body === '<p>[removed]</p>') ? 'comment-deleted' : '';
@@ -51,6 +51,7 @@ export default function Comment({ comment, i=0 }) {
          <div className="w-100 d-flex justify-content-end">
           <button id="idarchives" className="blockquote-footer popover" onClick={() => document.getElementById(id).classList.toggle('d-none')}></button>
           <div className="comment-archive">
+           {!(!awards) && parse(awards)}
            <span title={id}>{author}</span>
            {text !== null && 
             <span style={{ borderColor: 'var(--dark)', backgroundColor: 'var(--dark)',color: 'white' }} className="user-flair">{text}</span>

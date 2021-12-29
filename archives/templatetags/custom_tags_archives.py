@@ -44,7 +44,6 @@ def archive_pager(context, **kwargs): # do not use in posts
 
 from django.contrib.contenttypes.models import ContentType as CT
 from archives.forms import ReportForm
-from archives.models import Archive, Comment
 
 @register.inclusion_tag(Template('{% include default %}'), takes_context=True)
 def report(context, obj):

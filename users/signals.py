@@ -56,13 +56,13 @@ def signup_code_deleted(sender, instance, **kwargs):
 
 @receiver(auth.user_login_failed)
 def login_failed(sender, request, credentials, **kwargs):
-    try:
-        logger.debug('Login attempt failed for user %s from remote address %s.' % (
-            credentials['email'],
-            request.META['REMOTE_ADDR'],
-        ))
-    except AttributeError as e:
-        logger.error('%s : %s' , e, pp.pformat(locals()))
-    except Exception as e:
-        logger.error('%s: %s', e, pp.pformat(locals()))
-
+    if request:
+        try:
+            logger.debug('Login attempt failed for user %s from remote address %s.' % (
+                credentials['email'],
+                request.META['REMOTE_ADDR'],
+            ))
+        except KeyError:
+            logger.error(
+                pp.pformat(locals())
+            )

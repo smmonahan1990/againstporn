@@ -16,6 +16,7 @@ const CustomModal = () => {
   const PasswordChangeConfirmForm = React.lazy(() => import('../Auth/PasswordChangeConfirm'));
   const PasswordChangeForm = React.lazy(() => import('../Auth/PasswordChangeForm'));
   const PasswordChangeDone = React.lazy(() => import('../Auth/PasswordChangeDone'));
+  const ReportForm = React.lazy(() => import('../Archives/ReportForm'));
   const UnverifiedUser = React.lazy(() => import('./DefaultExport'));
   function swapForm(init: number) {
     if (init === 1) 
@@ -43,9 +44,13 @@ const CustomModal = () => {
       return {header: "Change your password", fragA: '...or', fragB: 'cancel'}
     } else if (init === 10) {
       return {header: "Password change successful", fragA: '', fragB: 'Great.'}
-    } else
+    } else if (init > 10) {
+      return {header: "Moderate "+document.location.pathname.split('/')[1]+ " post", fragA: "", fragB: "cancel"}
+    } else { 
       return {header: 'Bye then', fragA: '', fragB: ''}
+    }
   }
+//         {report && <h4 className="d-flex flex-column align-items-center">Placeholder Text</h4>}
 
   const { header, fragA, fragB } = formvars(mode);
   const logIn = mode === 1;
@@ -58,7 +63,8 @@ const CustomModal = () => {
   const passwordChangeConfirm = mode === 8;
   const passwordChangeVerified = mode === 9;
   const passwordChangeDone = mode === 10;
-  const color = (mode === 3 || mode === 8 || mode === 9) ? 'var(--secondary)' : 'var(--primary)';
+  const report = mode === 11;
+  const color = (mode === 3 || mode === 8 || mode === 9 || mode === 11) ? 'var(--secondary)' : 'var(--primary)';
   return (
     
     <Modal isOpen={!!mode}>
@@ -78,6 +84,7 @@ const CustomModal = () => {
          {passwordChangeConfirm && <PasswordChangeConfirmForm />}
          {passwordChangeVerified && <PasswordChangeForm />}
          {passwordChangeDone && <PasswordChangeDone />}
+         {report && <ReportForm />}
         </>
         }
        </Suspense>

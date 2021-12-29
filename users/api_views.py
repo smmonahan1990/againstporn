@@ -15,8 +15,12 @@ from rest_framework.authentication import TokenAuthentication as TA
 from rest_framework.authtoken.models import Token
 from rest_framework.request import ForcedAuthentication as FA
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework.views import csrf_exempt
 
 logger = logging.getLogger(__name__)
+
+debug = lambda x: logger.debug(pp.pformat(x))
 
 class CustomLogin(views.Login):
 
@@ -107,3 +111,19 @@ class CustomPasswordChange(views.PasswordChange):
         else:
             return super().post(request, format)
 
+#@csrf_exempt
+@api_view(['POST'])
+def permissions_check(request, *args, **kwargs):
+    debug(locals())
+    try:
+        user, _ = TA().authenticate(request)
+        if user:
+            response = Response({'success':'User authentication succeeded.'},status=status.HTTP_200_OK)
+            for permission in user.get_all_permissions():
+                response.set_signed_cookie(*permission.split('.'))
+#            response = Response({'success':user.get_all_permissions()}, status=status.HTTP_200_OK)
+#            response.set_signed_cookie('test','fuck')
+            return response
+    except Exception as e:
+        logger.error(e)
+    return Response({'detail':'Unable to verify user with the given credentials.'}, status=status.HTTP_404_NOT_FOUND)

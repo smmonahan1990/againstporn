@@ -1,22 +1,28 @@
 import parse from 'html-react-parser';
 import React from 'react';
+
 export default function Detail(props) {
     const { post: { title,
                     author,
                     submitted,
                     flair,
+                    nsfw,
                     fullsize,
                     selftext,
                     comments,
                     json
                   }, ...rest } = props; 
-    const nsfw = typeof fullsize === 'string' && `${flair || ''}`.toLowerCase().match(/trigger warning/)
+    const Report = React.lazy(() => import('./Report'));
+//    const nsfw = typeof fullsize === 'string' && `${flair || ''}`.toLowerCase().match(/trigger warning/)
     const Pager = React.lazy(() => import('./Pager'));
-    const Loading  = React.lazy(() => import('../App/Loading'));
+    const Loading = React.lazy(() => import('../App/Loading'));
     return (
 <>
 <div id="post-body" className="mb-1">
   <div className="d-flex align-items-center">
+   <React.Suspense fallback="">
+    <Report />
+   </React.Suspense>
    <h4 className="d-flex flex-grow-1 justify-content-end">
      {flair !== null && <span className="TNH mt-2 mr-1">{flair}</span>}
      <a href={document.location.pathname} className="font-weight-normal text-right" style={{ color: '#551A8B' }}>{title}</a>

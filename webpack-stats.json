@@ -69,6 +69,10 @@
       "name": "components/Archives/Pagination.d.ts",
       "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/Pagination.d.ts"
     },
+    "components/Archives/Report.d.ts": {
+      "name": "components/Archives/Report.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/Report.d.ts"
+    },
     "components/Archives/ScoreComments.d.ts": {
       "name": "components/Archives/ScoreComments.d.ts",
       "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/ScoreComments.d.ts"
@@ -133,18 +137,18 @@
       "name": "components/Auth/useAuth.d.ts",
       "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/useAuth.d.ts"
     },
-    "main.ef26f55d5360e5cbc919.js.LICENSE.txt": {
-      "name": "main.ef26f55d5360e5cbc919.js.LICENSE.txt",
-      "path": "/opt/bitnami/projects/reactdev/assets/dist/main.ef26f55d5360e5cbc919.js.LICENSE.txt"
+    "main.d14a79645a3f589d6ec9.js.LICENSE.txt": {
+      "name": "main.d14a79645a3f589d6ec9.js.LICENSE.txt",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/main.d14a79645a3f589d6ec9.js.LICENSE.txt"
     },
-    "main.ef26f55d5360e5cbc919.js": {
-      "name": "main.ef26f55d5360e5cbc919.js",
-      "path": "/opt/bitnami/projects/reactdev/assets/dist/main.ef26f55d5360e5cbc919.js"
+    "main.d14a79645a3f589d6ec9.js": {
+      "name": "main.d14a79645a3f589d6ec9.js",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/main.d14a79645a3f589d6ec9.js"
     }
   },
   "chunks": {
     "main": [
-      "main.ef26f55d5360e5cbc919.js"
+      "main.d14a79645a3f589d6ec9.js"
     ]
   }
 }

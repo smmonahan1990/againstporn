@@ -19,11 +19,11 @@ def PSerializer(post_model, **kwargs):
     def get_submitted(self,obj):
         return '{:%b %d, %Y, %I:%M %P.}'.format(obj.submitted).replace(' 0',' ')
     def get_json(self, obj):
-        return linebreaks(mark_safe(obj.json.replace('\\\'','')))
+        return linebreaks(mark_safe(re.sub('(?<!\n)\}$','\n}',obj.json)))
     def get_fields():
         if kwargs:
-            return ['comments','author','title','selftext','fullsize','submitted','flair','json']
-        return ['score','comments','author','title','submitted','flair','id','thumbnail']
+            return ['comments','author','title','selftext','fullsize','submitted','flair','json','nsfw']
+        return ['score','comments','author','title','submitted','flair','id','thumbnail','nsfw']
     class Meta:
         model = post_model
         fields = get_fields()
@@ -71,7 +71,7 @@ def CSerializer(comment_model):
 
     class Meta:
         model = comment_model
-        fields = ('id', 'body','score','author','date','children', 'text')
+        fields = ('id', 'body','score','author','date','children', 'text', 'awards')
 
     attrs = {
         '__module__': 'archives.serializers',

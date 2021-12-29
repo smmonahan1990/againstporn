@@ -5,6 +5,7 @@ function Archive({ post }) {
         thumbnail,
         submitted,
         flair,
+        nsfw,
         author,
         id
     } = post;
@@ -14,7 +15,7 @@ function Archive({ post }) {
       <div className="row">
         <div className="thumbnail">
           <a href={id+'/'}>
-            <img src={'/static/thumbnails/' + thumbnail} />
+            <img src={'/static/thumbnails/' + thumbnail} className={nsfw ? "nsfw" : ""} />
           </a>
         </div>
         <div id="body">

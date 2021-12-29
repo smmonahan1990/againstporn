@@ -5,6 +5,7 @@
 /reactdev
 /logs
 **/.hide
+*.save
 sendgrid.env
 /static
 /csv

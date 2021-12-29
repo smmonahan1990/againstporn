@@ -28,11 +28,15 @@ async function checkStatus(path: string, data: string): Promise<any> {
         process.env.NODE_ENV === 'production'
         ? url 
         : url.replace('https://againstporn.org', 'http://34.225.127.212:8000');
+    const headers = new Headers();
+    headers.set('Content-Type', "application/json");
+    headers.set('Authorization', 'Token ' + `${JSON.parse(data)?.token || ''}`);
     return fetch(api_url, {
         method: 'POST',
-        headers: {
-           'Content-Type': 'application/json',
-        }, 
+        headers: headers,
+//        headers: {
+//           'Content-Type': 'application/json',
+//        }, 
         body: data
     })
      .then((response) => response.json())
@@ -69,7 +73,10 @@ export const AuthProvider: React.FC = ({ children }) => {
       if (!serializedData?.email) {
           setAuthData(undefined);
       } else if (!!serializedData?.email && !serializedData.verificationStatus && !!serializedData.token) { 
-          setAuthData(serializedData);
+         const status = await checkStatus('permissions/', data || '');
+         if (!!status && !!status?.success) {  
+           setAuthData({ ...serializedData, verificationStatus: status.success});
+         }
       }
     } catch (error) {
       console.log(error);

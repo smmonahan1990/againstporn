@@ -2,7 +2,6 @@ from django import template
 from django.template import Template
 from django.utils.safestring import mark_safe
 import re
-from archives.models import Archive
 from PIL import Image
 register = template.Library()
 sub = {'&amp;':'&','&quot;':'"','&#039;':"'"}
@@ -61,10 +60,10 @@ def toggle_preview(context):
     except KeyError:
         link = context['post']
     if not link.selftext and not link.fullsize:
-        if issubclass(type(link), Archive):
-            context['default'] = Template('')
-        else:
-            context['default'] = 'button_link_svg.html'
+#        if issubclass(type(link), Archive):
+#            context['default'] = Template('')
+#        else:
+        context['default'] = 'button_link_svg.html'
     else:
         context['default'] = 'button_%s_svg.html' % ('img' if link.fullsize else ('link','text')[not re.match(matchstr, clean_selftext(link.selftext).lstrip())])
     return context
@@ -99,9 +98,8 @@ def embedded(post):
 @register.simple_tag(takes_context=True)
 def has_img(context):
     link = context.get(('object','post')[bool(context.get('post'))])
-    if issubclass(type(link),Archive):
-        if link.fullsize or (bool(link.selftext) and (imgur.search(link.selftext) or youtube.search(link.selftext))):
-            return 'post-has-img%s' % ('',' nsfw')[link.flair == 'WARNING: GORE' or (isinstance(link.flair,str) and link.flair.upper().startswith('NSFW'))]
+    if link.fullsize or (bool(link.selftext) and (imgur.search(link.selftext) or youtube.search(link.selftext))):
+        return 'post-has-img%s' % ('',' nsfw')[link.flair == 'WARNING: GORE' or (isinstance(link.flair,str) and link.flair.upper().startswith('NSFW'))]
     else:
         if isinstance(link.link,str) and (youtube.search(link.link) or imgur.search(link.link)):
             return 'has-img%s' % ('',' has-embedded nsfw')[bool(link.nsfw)]

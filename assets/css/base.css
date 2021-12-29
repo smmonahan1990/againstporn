@@ -147,7 +147,6 @@ form.form-inline.ml-auto {
 
 #nsfw {
     position: absolute;
-    top: 50%;
     color: hsl(0deg 0% 100%);
     font-size: 30px;
     -webkit-text-stroke: 1px black;
@@ -397,4 +396,8 @@ button[aria-haspopup]:focus {
 }
 blockquote + br {
     display: none;
+}
+
+i[class*=fa-flag] {
+    margin-right: 0.5rem!important;
 }

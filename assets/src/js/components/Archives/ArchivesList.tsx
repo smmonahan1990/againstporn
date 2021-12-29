@@ -11,6 +11,7 @@ interface ComponentProps {
 
 interface ArchiveItem {
     id: string;
+    nsfw: boolean;
     title: string;
     submitted: string;
     author: string;

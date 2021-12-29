@@ -1,13 +1,35 @@
+#django
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .helpers import choices
-from django.db.models import ObjectDoesNotExist
+from django.views.generic import View
 from django.shortcuts import get_object_or_404
+
+#python
+import logging
+import pprint as pp
+
+#app
+from .helpers import choices
 from .templatetags.custom_tags_archives import archive_pager
+from reactdev.logging import CustomFormatter
+from .views import create_report
 
 # api views
 from .serializers import PSerializer as PS, CSerializer as CS
-from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.views import status, csrf_exempt as rest_exempt
+
+
+logger = logging.getLogger(__name__)
+logger.setLevel('DEBUG')
+handler = logging.StreamHandler()
+handler.setFormatter(
+  CustomFormatter(
+    '%(name)s - %(levelname)s - %(asctime)s - %(funcName)s - %(lineno)d - %(message)s',
+    datefmt = '%m/%d/%Y %I:%M:%S %P',
+  ))
+handler.setLevel('DEBUG')
+logger.addHandler(handler)
 
 @api_view(['GET'])
 def archives_detail(request, **kwargs):
@@ -29,14 +51,22 @@ def archives_detail(request, **kwargs):
     post = pserializer.data
     if obj.orphans:
         cmodel = obj.orphans.model
-        cserializer = CS(cmodel)(obj.orphans.all(),
-            context={'request':request},
-            many=True
-        )
+        if kwargs.get('id'):
+            cserializer = CS(cmodel)(
+                obj.comment_set.filter(id=kwargs['id']),
+                context={'request':request},
+                many=True
+            )
+        else:
+            cserializer = CS(cmodel)(obj.orphans,
+                context={'request':request},
+                many=True
+            )
         comments = cserializer.data
     response = Response({
         'post': post,
         'comments': comments,
+        'comment_count':obj.comment_set.count(),
         'next': next,
         'prev': prev,
     })
@@ -83,5 +113,28 @@ def archives_list(request, **kwargs):
     })
     return response
 
+@api_view(['POST'])
+def report_archive(request, *args, **kwargs):
+    try:
+        permission = request.get_signed_cookie('archives')
+        logger.debug('signed cookie: %s', permission)
+        if permission:
+            return create_report(request, *args, **kwargs)
+#            data = {
+#                'flair': choices(kwargs['model']),
+#            }
+#        return Response(data, status=status.HTTP_200_OK)
+    except KeyError:
+        pass
+    return Response(status=status.HTTP_401_UNAUTHORIZED)
 
+class ArchiveAPIView(View):
+    model = None
+    def get(self, request, *args, **kwargs):
+        if not kwargs.get('slug'):
+            return archives_list(request, *args, **kwargs, model=self.model)
+        return archives_detail(request, *args, **kwargs, model=self.model)
 
+#    @csrf_exempt
+    def post(self, request, *args, **kwargs):
+        return report_archive(request, *args, **kwargs, model=self.model)

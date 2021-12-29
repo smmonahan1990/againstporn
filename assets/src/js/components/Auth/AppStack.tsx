@@ -32,6 +32,14 @@ export default function AppStack() {
             Change password
           </button>
           <div className="dropdown-divider"></div>
+          {!!authData?.verificationStatus &&
+           <>
+            <button className="dropdown-item" onClick={() => document.location.pathname = '/admin/'}>
+             Site Administration
+            </button>
+            <div className="dropdown-divider"></div>
+           </>
+          }
           <button className="dropdown-item" onClick={signOut}>
             Log Out
           </button>

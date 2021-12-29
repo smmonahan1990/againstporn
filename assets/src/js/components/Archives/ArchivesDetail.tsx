@@ -13,12 +13,14 @@ interface CommentItem {
     id: string;
     score: number;
     text: string;
+    awards: string;
     children: Array<CommentItem>;
 }
 
 interface ComponentState {
     post: ArchiveItem | string;
     comments: Array<CommentItem>;
+    comment_count: number;
     next: string;
     previous: string;
 }
@@ -29,6 +31,7 @@ class ArchivesDetail extends Component<ComponentProps, ComponentState> {
         this.state = {
             post: '',
             comments: [],
+            comment_count: 0,
             next: '',
             previous: '',
         }
@@ -38,8 +41,9 @@ class ArchivesDetail extends Component<ComponentProps, ComponentState> {
             this.setState({
                 post: result.post,
                 comments: result.comments,
+                comment_count: result.comment_count,
                 next: result.next,
-                previous: result.prev
+                previous: result.prev,
             })
         })
         .catch((err) => console.log(err));
@@ -49,7 +53,7 @@ class ArchivesDetail extends Component<ComponentProps, ComponentState> {
     }
     render() {
         const Pager = React.lazy(() => import('./Pager'));
-        const { comments, ...props } = this.state;
+        const { comments, comment_count, ...props } = this.state;
         return (
           <div className="container d-flex flex-column">
             {this.shouldComponentUpdate() &&
@@ -58,14 +62,14 @@ class ArchivesDetail extends Component<ComponentProps, ComponentState> {
               <div className={"flex-grow-1" + (comments.length === 1 ? ' d-flex' : '')}>
                {comments.length > 0 && 
                  <>
-                  <div className={"mt-2 mb-2 flex-fill" + (comments.length === 1 ? ' d-flex align-items-end' : '')}>  
+                  <div className={"mt-2 flex-fill" + (comments.length === 1 ? ' mb-2 d-flex align-items-end' : '')}>  
                    {comments.map((comment, index) =>
                     <Comment key={index} comment={comment} />
                    )}
                   </div>
                  </>
                }
-               {comments.length > 1 &&
+               {comment_count > 1 &&
                 <React.Suspense fallback={<div className="text-center">Loading...</div>}>
                  <Pager {...props} />
                 </React.Suspense>

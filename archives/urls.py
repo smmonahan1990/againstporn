@@ -1,7 +1,7 @@
-from django.urls import path
+from django.urls import re_path
 from django.conf.urls import url
-from .api_views import archives_detail, archives_list
+from .api_views import ArchiveAPIView
+from django.views.decorators.csrf import csrf_exempt
 from .models import choices
 
-apipatterns = [url(r'^%s/$' % i.name.lower(), archives_list, {'model':i}) for i, j in choices]
-apipatterns +=[path(r'%s/<slug:slug>/' % i.name.lower(), archives_detail, {'model':i}) for i, j in choices]
+apipatterns = [re_path(r'^%s/(?:(?P<slug>\w{6})/(?:(?P<id>\w{7})/)?)?' % j, csrf_exempt(ArchiveAPIView.as_view(model=i))) for i, j in choices]
