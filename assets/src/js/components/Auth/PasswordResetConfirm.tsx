@@ -22,7 +22,8 @@ async function resetPassword(data: any) {
 }
 
 const PasswordResetConfirmForm = () => {
-  const { confirmPasswordReset,
+  const { authData,
+          confirmPasswordReset,
           setLoading
   } = useAuth();
   const { register, handleSubmit } = useForm();
@@ -38,7 +39,7 @@ const PasswordResetConfirmForm = () => {
     }
     else {
       setLoading(true);
-      await confirmPasswordReset({email: data.email, token: undefined, verificationStatus: 'pendingPasswordReset'}) 
+      await confirmPasswordReset({ ...authData, email: data.email, token: '', verificationStatus: 'pendingPasswordReset'}) 
     }
     return {failure: failure};
   } 

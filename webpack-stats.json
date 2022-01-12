@@ -57,9 +57,25 @@
       "name": "components/Archives/Detail.d.ts",
       "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/Detail.d.ts"
     },
+    "components/Archives/Flair.d.ts": {
+      "name": "components/Archives/Flair.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/Flair.d.ts"
+    },
+    "components/Archives/Flair1.d.ts": {
+      "name": "components/Archives/Flair1.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/Flair1.d.ts"
+    },
     "components/Archives/Form.d.ts": {
       "name": "components/Archives/Form.d.ts",
       "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/Form.d.ts"
+    },
+    "components/Archives/ModForm.d.ts": {
+      "name": "components/Archives/ModForm.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/ModForm.d.ts"
+    },
+    "components/Archives/ModerationForm.d.ts": {
+      "name": "components/Archives/ModerationForm.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/ModerationForm.d.ts"
     },
     "components/Archives/Pager.d.ts": {
       "name": "components/Archives/Pager.d.ts",
@@ -68,6 +84,14 @@
     "components/Archives/Pagination.d.ts": {
       "name": "components/Archives/Pagination.d.ts",
       "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/Pagination.d.ts"
+    },
+    "components/Archives/PostModerated.d.ts": {
+      "name": "components/Archives/PostModerated.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/PostModerated.d.ts"
+    },
+    "components/Archives/RF1.d.ts": {
+      "name": "components/Archives/RF1.d.ts",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Archives/RF1.d.ts"
     },
     "components/Archives/Report.d.ts": {
       "name": "components/Archives/Report.d.ts",
@@ -137,18 +161,23 @@
       "name": "components/Auth/useAuth.d.ts",
       "path": "/opt/bitnami/projects/reactdev/assets/dist/components/Auth/useAuth.d.ts"
     },
-    "main.d14a79645a3f589d6ec9.js.LICENSE.txt": {
-      "name": "main.d14a79645a3f589d6ec9.js.LICENSE.txt",
-      "path": "/opt/bitnami/projects/reactdev/assets/dist/main.d14a79645a3f589d6ec9.js.LICENSE.txt"
+    "main.cde4ac99512260c4abf5.js": {
+      "name": "main.cde4ac99512260c4abf5.js",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/main.cde4ac99512260c4abf5.js"
     },
-    "main.d14a79645a3f589d6ec9.js": {
-      "name": "main.d14a79645a3f589d6ec9.js",
-      "path": "/opt/bitnami/projects/reactdev/assets/dist/main.d14a79645a3f589d6ec9.js"
+    "294.a812441900a91b7728d4.js.LICENSE.txt": {
+      "name": "294.a812441900a91b7728d4.js.LICENSE.txt",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/294.a812441900a91b7728d4.js.LICENSE.txt"
+    },
+    "294.a812441900a91b7728d4.js": {
+      "name": "294.a812441900a91b7728d4.js",
+      "path": "/opt/bitnami/projects/reactdev/assets/dist/294.a812441900a91b7728d4.js"
     }
   },
   "chunks": {
     "main": [
-      "main.d14a79645a3f589d6ec9.js"
+      "294.a812441900a91b7728d4.js",
+      "main.cde4ac99512260c4abf5.js"
     ]
   }
 }

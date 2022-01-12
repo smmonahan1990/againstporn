@@ -6,6 +6,8 @@ from .models import CustomUser as CU
 from datetime import datetime as dt, timezone as tz
 import logging, os
 import pprint as pp
+from archives.models import archives
+from archives.helpers import choices
 # api views
 
 from authemail import views
@@ -15,12 +17,11 @@ from rest_framework.authentication import TokenAuthentication as TA
 from rest_framework.authtoken.models import Token
 from rest_framework.request import ForcedAuthentication as FA
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAdminUser
 from rest_framework.views import csrf_exempt
 
 logger = logging.getLogger(__name__)
-
-debug = lambda x: logger.debug(pp.pformat(x))
 
 class CustomLogin(views.Login):
 
@@ -30,12 +31,15 @@ class CustomLogin(views.Login):
             user = auth.authenticate(request=request, **request.data)
         except TypeError:
             try:
-                cred = {'email':request.data['email'][0], 'password':request.data['password'][0]}
+                cred = dict(i for i in request.data.items())
                 user = auth.authenticate(request=request, **cred)
             except (KeyError, TypeError):
                 user = None
         if user:
             auth.login(request, user)
+            response.data['reports'] = ','.join(user.report_set.values_list('object_id',flat=True))
+            if user.is_staff:
+                response.data['flair'] = {j.name.lower(): choices(j) for i, j in archives.items()}
         return response
 
 from rest_framework import exceptions
@@ -57,7 +61,7 @@ class CustomVerify(views.SignupVerify):
                 return Response({'success':'user is verified'})
             else:
                 pass
-        except Exception as e:
+        except ObjectDoesNotExist as e:
             logger.error(e)
         return Response({'failure': 'unable to verify user.'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -101,29 +105,11 @@ class CustomPasswordChange(views.PasswordChange):
     def post(self, request, format=None):
         if request.data.get('verify'):
             try:
-                user, _ = TA().authenticate(request)
-                user.check_password(request.data['verify'])
-                if user:
+                verified = user.check_password(request.data['verify'])
+                if verified:
                     return Response({'success':'user verified.'}, status=status.HTTP_200_OK)
-            except TypeError:
+            except (TypeError, KeyError):
                 pass
             return Response({'detail':'Unable to verify user with the given credentials.'}, status=status.HTTP_404_NOT_FOUND)
         else:
             return super().post(request, format)
-
-#@csrf_exempt
-@api_view(['POST'])
-def permissions_check(request, *args, **kwargs):
-    debug(locals())
-    try:
-        user, _ = TA().authenticate(request)
-        if user:
-            response = Response({'success':'User authentication succeeded.'},status=status.HTTP_200_OK)
-            for permission in user.get_all_permissions():
-                response.set_signed_cookie(*permission.split('.'))
-#            response = Response({'success':user.get_all_permissions()}, status=status.HTTP_200_OK)
-#            response.set_signed_cookie('test','fuck')
-            return response
-    except Exception as e:
-        logger.error(e)
-    return Response({'detail':'Unable to verify user with the given credentials.'}, status=status.HTTP_404_NOT_FOUND)

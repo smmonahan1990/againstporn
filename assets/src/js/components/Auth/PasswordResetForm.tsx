@@ -47,7 +47,7 @@ const PasswordResetForm = () => {
       }
       else if (!!response?.success) {
         setLoading(true);
-        await resetPassword({email: authData?.email || '', token: '', verificationStatus: ''}) 
+        await resetPassword({ ...authData, email: authData?.email || '', token: '', verificationStatus: ''}) 
       }
       else {
         setFailure('There was an error.');

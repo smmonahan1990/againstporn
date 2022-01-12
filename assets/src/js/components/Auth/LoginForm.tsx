@@ -22,7 +22,8 @@ async function loginUser(credentials: any): Promise<any> {
 }
 
 const LoginForm = () => {
-  const { signIn,
+  const { authData, 
+          signIn,
           modeHandler: { setMode }
   } = useAuth();
   const { register, handleSubmit } = useForm();
@@ -30,9 +31,9 @@ const LoginForm = () => {
   const onSubmit = async (data: any, e: any) => {
     e.preventDefault();
     const response = await loginUser(data);
-    if (!!response?.token) {
+    if (response.hasOwnProperty('token')) {
       const _email = data.email;
-      signIn({ token: response.token, email: _email, verificationStatus: "" });
+      signIn({ ...authData, token: response.token, email: _email, verificationStatus: `${JSON.stringify(response?.flair) || ""}`, reports: response?.reports });
     } else {
       setError(response?.detail || '');
     }

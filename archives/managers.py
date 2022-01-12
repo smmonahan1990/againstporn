@@ -1,6 +1,9 @@
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Count, F
+from helpers import CL
 import time
+
+logger = CL(__name__)
 
 score_dict = {
     'opt1': r'^0',
@@ -22,6 +25,21 @@ class ArchiveManager(models.Manager):
     @property
     def exhaustive(self):
         return self.get_queryset(no_votes_comments=True)
+
+    def set_comments(self, *args, **kwargs):
+        qs = self.annotate(Count('comment_set')).exclude(comment_set__count=F('comments'))
+        if qs:
+            logger.debug('updating comment fields of %d %s.', qs.count(), self.model._meta.verbose_name_plural)
+            [self.filter(id=i.id).update(comments=i.comment_set__count) for i in qs]
+        else:
+            logger.debug('all clean.')
+
+    def from_df(self,df,*args,**kwargs):
+        n = self.exhaustive.count()
+        df.drop(df.loc[df['id'].isin(self.exhaustive.values_list('id',flat=True))].index, inplace=True)
+        self.bulk_create(self.model(**i) for i in df.to_dict('records'))
+        m = self.exhaustive.count()
+        logger.debug('%d new %s created.', m-n, self.model._meta.verbose_name_plural)
 
     def validate_dtformat(func):
         def innerfunc(self, request, params):
@@ -50,3 +68,23 @@ class ArchiveManager(models.Manager):
             queryset = queryset.distinct()
         request.session['queryset_%s' % self.model._meta.model_name] = queryset
 
+class CommentManager(models.Manager):
+
+    def delete_removed(self):
+        n = self.count()
+        x = 1
+        while x > 0:
+            x, y = self.annotate(Count('children')).filter(Q(children__count=0)&Q(body__regex='^\[(deleted|removed)\]$')).delete()
+        m = self.count()
+        logger.debug('%d comments deleted.',n-m)
+
+    def bulk_create(self, *args, **kwargs):
+        n = self.count()
+        super().bulk_create(*args, **kwargs)
+        self.delete_removed()
+        m = self.count()
+        logger.debug('%d new comments created.', m-n)
+
+    def from_df(self, df, *args, **kwargs):
+        df.drop(df.loc[df['id'].isin(self.values_list('id',flat=True))].index, inplace=True)
+        self.bulk_create(self.model(**i) for i in df.to_dict('records'))

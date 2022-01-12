@@ -16,12 +16,13 @@ const CustomModal = () => {
   const PasswordChangeConfirmForm = React.lazy(() => import('../Auth/PasswordChangeConfirm'));
   const PasswordChangeForm = React.lazy(() => import('../Auth/PasswordChangeForm'));
   const PasswordChangeDone = React.lazy(() => import('../Auth/PasswordChangeDone'));
-  const ReportForm = React.lazy(() => import('../Archives/ReportForm'));
+  const ModerationForm = React.lazy(() => import('../Archives/ModerationForm'));
+  const PostModerated = React.lazy(() => import('../Archives/PostModerated'));
   const UnverifiedUser = React.lazy(() => import('./DefaultExport'));
   function swapForm(init: number) {
     if (init === 1) 
       setMode(2);
-    else if (init === 2 || init === 3 || init === 7)
+    else if ([2, 3, 7].includes(init))
       setMode(1);
     else setMode(0);
   }
@@ -44,13 +45,14 @@ const CustomModal = () => {
       return {header: "Change your password", fragA: '...or', fragB: 'cancel'}
     } else if (init === 10) {
       return {header: "Password change successful", fragA: '', fragB: 'Great.'}
-    } else if (init > 10) {
-      return {header: "Moderate "+document.location.pathname.split('/')[1]+ " post", fragA: "", fragB: "cancel"}
+    } else if (init === 11) {
+      return {header: "Moderate "+document.querySelector('.nav-link.active').innerHTML + " Post", fragA: "", fragB: "cancel"}
+    } else if (init === 12) {
+      return {header: document.querySelector('.nav-link.active').innerHTML + ' post moderated.', fragA: '', fragB: 'Great.'}
     } else { 
       return {header: 'Bye then', fragA: '', fragB: ''}
     }
   }
-//         {report && <h4 className="d-flex flex-column align-items-center">Placeholder Text</h4>}
 
   const { header, fragA, fragB } = formvars(mode);
   const logIn = mode === 1;
@@ -63,8 +65,9 @@ const CustomModal = () => {
   const passwordChangeConfirm = mode === 8;
   const passwordChangeVerified = mode === 9;
   const passwordChangeDone = mode === 10;
-  const report = mode === 11;
-  const color = (mode === 3 || mode === 8 || mode === 9 || mode === 11) ? 'var(--secondary)' : 'var(--primary)';
+  const moderate = mode === 11;
+  const moderated = mode === 12;
+  const color = [3, 8, 9, 11].includes(mode) ? 'var(--secondary)' : 'var(--primary)';
   return (
     
     <Modal isOpen={!!mode}>
@@ -84,7 +87,8 @@ const CustomModal = () => {
          {passwordChangeConfirm && <PasswordChangeConfirmForm />}
          {passwordChangeVerified && <PasswordChangeForm />}
          {passwordChangeDone && <PasswordChangeDone />}
-         {report && <ReportForm />}
+         {moderate && <ModerationForm />}
+         {moderated && <PostModerated />}
         </>
         }
        </Suspense>

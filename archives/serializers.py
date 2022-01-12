@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from templates.templatetags.custom_tags import apply_styles, embedded
 from django.template.defaultfilters import linebreaks, mark_safe
+from .helpers import choices
 import re
 
 # serialize posts
@@ -19,7 +20,10 @@ def PSerializer(post_model, **kwargs):
     def get_submitted(self,obj):
         return '{:%b %d, %Y, %I:%M %P.}'.format(obj.submitted).replace(' 0',' ')
     def get_json(self, obj):
-        return linebreaks(mark_safe(re.sub('(?<!\n)\}$','\n}',obj.json)))
+        try:
+            return linebreaks(mark_safe(re.sub('(?<!\n)\}$','\n}',obj.json)))
+        except TypeError:
+            return '(currently unavailable)'
     def get_fields():
         if kwargs:
             return ['comments','author','title','selftext','fullsize','submitted','flair','json','nsfw']
@@ -45,6 +49,30 @@ def PSerializer(post_model, **kwargs):
     serializer = type(name, (serializers.ModelSerializer,), attrs)
     return serializer
 
+def WriteablePSerializer(post_model):
+
+    def run_validation(self, data):
+        code = int(data['action'])
+        validated_data = {}
+        if code == 0:
+           validated_data.update(flair=None)
+        elif code == 1:
+           validated_data.update(nsfw=not self.instance.nsfw)
+        elif code == 2:
+           validated_data.update({'status':2})
+        else:
+           flair_choices = choices(post_model)
+           validated_data.update(flair = flair_choices[code-4][0])
+        return validated_data
+
+    class Meta:
+        model = post_model
+        fields = ['nsfw', 'status', 'flair']
+
+    attrs = {'__module__':'archives.serializers','Meta':Meta, 'run_validation':run_validation}
+    name = 'Writeable%sSerializer' % post_model.__name__
+    serializer = type(name, (serializers.ModelSerializer,), attrs)
+    return serializer
 
 # serialize comments
 
@@ -87,4 +115,24 @@ def CSerializer(comment_model):
     serializer = type(name, (serializers.ModelSerializer,),attrs)
     return serializer
 
+from archives.models import Report
+from django.contrib.admin.options import get_content_type_for_model
 
+class ReportSerializer(serializers.ModelSerializer):
+#    content_type = serializers.SerializerMethodField()
+#    object_id = serializers.SerializerMethodField()
+#    def get_content_type(self, obj, *args, **kwargs):
+#        return get_content_type_for_model(obj)
+
+
+    def __init__(self, *args, **kwargs):
+        _model = kwargs.pop('model')
+        self.content_type = get_content_type_for_model(_model)
+        self.object_id = kwargs.pop('slug')
+        self.content_object = self.content_type.model_class().objects.get(id=self.object_id)
+        super().__init__(*args, **kwargs)
+
+
+    class Meta:
+        model = Report
+        fields = ['action',]

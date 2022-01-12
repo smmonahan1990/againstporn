@@ -22,7 +22,9 @@ async function signupUser(credentials: any) {
 }
 
 const SignupForm = () => {
-  const { setLoading, signUp } = useAuth();
+  const { authData, 
+          setLoading,
+          signUp } = useAuth();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState('');
   const [failure, setFailure] = useState('');
@@ -47,7 +49,7 @@ const SignupForm = () => {
       }
       else {
         setLoading(true);
-        await signUp({email: data.email, token: undefined, verificationStatus: 'created'});
+        await signUp({ reports: '', email: data.email, token: '', verificationStatus: 'created'});
       }
     }
     return {error: error, failure: failure};

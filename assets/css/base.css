@@ -50,6 +50,10 @@ body {
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
 }
+.comment-body p:last-child {
+    margin-bottom: 0px!important;
+}
+
 .comment-header {
     position: relative;
     display: flex;
@@ -399,5 +403,26 @@ blockquote + br {
 }
 
 i[class*=fa-flag] {
-    margin-right: 0.5rem!important;
+    margin-right: 7.5px!important;
+}
+
+[name=mod_action] {
+    border-radius: 3px;
+}
+[name=mod_action]:focus-visible {
+    outline: none;
+}
+i.fa.fa-flag.reported {
+    color: var(--danger)!important;
+}
+i.fa.fa-flag.btn-danger.small {
+    color: var(--danger)!important;
+    background-color: unset!important;
+    border-color:unset!important;
+    font-size: 100%;
+    font-weight: 700;
+}
+
+.success {
+    color: var(--success)!important;
 }

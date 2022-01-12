@@ -4,26 +4,33 @@ from django.shortcuts import reverse
 from django.template.defaultfilters import truncatechars
 from django.utils.html import mark_safe
 from emoji import demojize
-from .managers import ArchiveManager
+from .managers import ArchiveManager, CommentManager
 # Create your models here.
+
+STATUS_CHOICES = models.IntegerChoices(
+ 'status', names=(
+  'PUBLISHED','UNPUBLISHED','REPORTED',
+ ))
+
 
 def model_factory(klass, long_name):
     class Archive(models.Model):
         name = long_name
+        status = models.IntegerField(choices=STATUS_CHOICES.choices, default=1,null=True, blank=True)
         nsfw = models.BooleanField(null=True, blank=True)
-        mod_action = models.IntegerChoices('action', names=('REMOVED','REFLAIRED','MARKED_NSFW','OTHER'))
         selftext = models.TextField(null=True, blank=True)
         fullsize = models.CharField(max_length=255, null=True, blank=True)
         thumbnail = models.CharField(max_length=255, null=True, blank=True)
-        title = models.SlugField(max_length=350)
-        author = models.CharField(max_length=50)
+        title = models.CharField(max_length=350,null=True, blank=True)
+        author = models.CharField(max_length=50,null=True,blank=True)
         flair = models.CharField(max_length=255, null=True, blank=True)
-        submitted = models.DateTimeField(auto_now_add=False)
-        score = models.CharField(max_length=10, null=True, blank=True)
+        submitted = models.DateTimeField(auto_now_add=False,null=True,blank=True)
+        score = models.IntegerField(default=1, null=True, blank=True)
         comments = models.PositiveIntegerField(null=True, blank=True)
         id = models.SlugField(max_length=6, primary_key=True)
-        json = models.JSONField(null=True, blank=True)
+        json = models.TextField(null=True, blank=True)
         objects = ArchiveManager()
+        manager = models.QuerySet(using='default').as_manager()
 
         def get_absolute_url(self):
             return reverse('frontend', args = [self.name.lower(), self.id,])
@@ -38,6 +45,7 @@ def model_factory(klass, long_name):
         class Meta:
             abstract = True
             ordering = ['-id',]
+            verbose_name = f'{long_name} Post'
             verbose_name_plural = f'{long_name} Posts'
 
     class Comment(models.Model):
@@ -51,6 +59,7 @@ def model_factory(klass, long_name):
         bgcolor = models.CharField(max_length=50,null=True,blank=True)
         color = models.CharField(max_length=50,null=True,blank=True)
         css_class = models.CharField(max_length=50,null=True,blank=True)
+        objects = CommentManager()
         post = models.ForeignKey(f'archives.{klass}',
             on_delete = models.CASCADE,
             to_field = 'id',
@@ -74,13 +83,17 @@ def model_factory(klass, long_name):
             return isinstance(self.score, int) and self.score < 1
 
         def __str__(self):
-            return '%s: %s' % (self.author, demojize(truncatechars(self.body,100)))
+            try:
+                return '%s: %s' % (self.author, demojize(truncatechars(self.body,100)))
+            except TypeError:
+                return super().__str__()
 
         def get_absolute_url(self):
             return reverse('frontend', args=[self.post.name.lower(),self.post_id,self.id,])
 
         class Meta:
             abstract = True
+            verbose_name = f'{long_name} Comment'
             verbose_name_plural = f'{long_name} Comments'
 
     ArchiveModel = type(klass, (Archive,), {'__module__':'archives.models'})

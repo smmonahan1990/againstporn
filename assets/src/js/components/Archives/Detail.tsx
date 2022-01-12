@@ -12,7 +12,7 @@ export default function Detail(props) {
                     comments,
                     json
                   }, ...rest } = props; 
-    const Report = React.lazy(() => import('./Report'));
+    const ModForm = React.lazy(() => import('./ModForm'));
 //    const nsfw = typeof fullsize === 'string' && `${flair || ''}`.toLowerCase().match(/trigger warning/)
     const Pager = React.lazy(() => import('./Pager'));
     const Loading = React.lazy(() => import('../App/Loading'));
@@ -21,10 +21,10 @@ export default function Detail(props) {
 <div id="post-body" className="mb-1">
   <div className="d-flex align-items-center">
    <React.Suspense fallback="">
-    <Report />
+    <ModForm />
    </React.Suspense>
-   <h4 className="d-flex flex-grow-1 justify-content-end">
-     {flair !== null && <span className="TNH mt-2 mr-1">{flair}</span>}
+   <h4 className="d-flex flex-grow-1 justify-content-end ml-1">
+     {flair !== null && <span className="TNH mt-2 mr-1 ml-1">{flair}</span>}
      <a href={document.location.pathname} className="font-weight-normal text-right" style={{ color: '#551A8B' }}>{title}</a>
    </h4>
  </div>

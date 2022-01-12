@@ -2,9 +2,12 @@ function Choices(props) {
     return <option value={props.inner}>{props.outer}</option>;
 }
 function Select(props) {
-    const { name, items, initial }  = props;
+    const { name,
+            items,
+            initial,
+            css } = props;
     return (
-      <select name={name} id={'id_' + name} className="select form-control">
+      <select name={name} id={'id_' + name} className={css}>
         <option value="">{initial}</option>
         {items.map((i, index) =>
           <Choices key={index} inner={i[0]} outer={i[1]} />
@@ -24,6 +27,7 @@ const FlairWrapper = ({ t }) =>
       name="flair"
       items={ t.state.flair }
       initial="Search by post flair..."
+      css="form-control select"
 />
 const Flair = ({ t }) =>
     <FormGroup name="flair" label="Flair" element={<FlairWrapper t={t} />}
@@ -33,6 +37,7 @@ const CategoryWrapper = <Select
     name="category"
     items ={[['selftext','Text'],['fullsize','Images']]}
     initial="Show only posts with..."
+    css="form-control select"
 />
 const Category = <FormGroup
     name="category"
@@ -207,3 +212,4 @@ const Form = ({ t }) =>
     </form>
 
 export default Form;
+export { Select };

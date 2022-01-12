@@ -3,7 +3,8 @@ import React from 'react';
 declare type AuthData = {
   token: string;
   email: string;
-  verificationStatus: string;
+  verificationStatus: any;
+  reports: string;
 };
 
 declare type ModeHandler = {

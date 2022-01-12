@@ -4,12 +4,13 @@ from django.db import migrations
 from helpers.helpers import metadata as m
 
 def add_metadata(apps, schema_editor):
-    models = apps.get_models('archives')
-    archives = list(filter(lambda x: x._meta.model_name in ['ap','ak'], models))
-    for archive in archives:
-        for object in archive.objects.all():
-            object.json = m(object, pp=True)
-            object.save()
+    return
+#    models = apps.get_models('archives')
+#    archives = list(filter(lambda x: x._meta.model_name in ['ap','ak'], models))
+#    for archive in archives:
+#        for object in archive.objects.all():
+#            object.json = m(object, pp=True)
+#            object.save()
 
 class Migration(migrations.Migration):
 

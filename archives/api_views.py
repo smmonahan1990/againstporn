@@ -1,7 +1,10 @@
 #django
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.admin.options import get_content_type_for_model
+from django.contrib.auth.decorators import permission_required
+from django.contrib.contenttypes.models import ContentType
 from django.views.generic import View
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, reverse
 
 #python
 import logging
@@ -11,32 +14,24 @@ import pprint as pp
 from .helpers import choices
 from .templatetags.custom_tags_archives import archive_pager
 from reactdev.logging import CustomFormatter
-from .views import create_report
+#from .views import create_report
+from .forms import ReportForm
 
 # api views
-from .serializers import PSerializer as PS, CSerializer as CS
-from rest_framework.decorators import api_view
+from .serializers import PSerializer as PS, CSerializer as CS, WriteablePSerializer
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.permissions import IsAdminUser
 from rest_framework.views import status, csrf_exempt as rest_exempt
 
-
-logger = logging.getLogger(__name__)
-logger.setLevel('DEBUG')
-handler = logging.StreamHandler()
-handler.setFormatter(
-  CustomFormatter(
-    '%(name)s - %(levelname)s - %(asctime)s - %(funcName)s - %(lineno)d - %(message)s',
-    datefmt = '%m/%d/%Y %I:%M:%S %P',
-  ))
-handler.setLevel('DEBUG')
-logger.addHandler(handler)
+from reactdev.logging_config import CustomLogger as CL
+logger = CL(__name__)
 
 @api_view(['GET'])
 def archives_detail(request, **kwargs):
     model = kwargs['model']
-    comments = {}
     next, prev = '', ''
-    obj = get_object_or_404(model, id=kwargs['slug'])
+    obj = get_object_or_404(model.manager.using('default'), id=kwargs['slug'])
     next, prev = map(
         lambda x: x.get_absolute_url(),
         archive_pager({
@@ -48,24 +43,16 @@ def archives_detail(request, **kwargs):
         context={'request':request},
         many=False
     )
-    post = pserializer.data
-    if obj.orphans:
-        cmodel = obj.orphans.model
-        if kwargs.get('id'):
-            cserializer = CS(cmodel)(
-                obj.comment_set.filter(id=kwargs['id']),
-                context={'request':request},
-                many=True
-            )
-        else:
-            cserializer = CS(cmodel)(obj.orphans,
-                context={'request':request},
-                many=True
-            )
-        comments = cserializer.data
+    cmodel = obj.orphans.model
+    cset = obj.orphans if not kwargs.get('id') else obj.comment_set.filter(id=kwargs['id'])
+    cserializer = CS(cmodel)(
+        cset,
+        context=dict(request=request),
+        many=True
+    )
     response = Response({
-        'post': post,
-        'comments': comments,
+        'post': pserializer.data,
+        'comments': cserializer.data,
         'comment_count':obj.comment_set.count(),
         'next': next,
         'prev': prev,
@@ -114,19 +101,28 @@ def archives_list(request, **kwargs):
     return response
 
 @api_view(['POST'])
+@permission_classes([IsAdminUser,])
 def report_archive(request, *args, **kwargs):
+    if not kwargs.get('slug'):
+        return Response({'success':request.user.is_staff},status=status.HTTP_200_OK)
+    instance = get_object_or_404(kwargs['model'].manager, id=kwargs['slug'])
+    if not request.data.get('action'):
+        resp_data=reverse('admin:%s_%s_change' % (instance._meta.app_label, instance._meta.model_name), args=(kwargs['slug'],))
+        response = Response({'success':resp_data},status=status.HTTP_200_OK)
+        return response
+    serializer = WriteablePSerializer(kwargs['model'])
     try:
-        permission = request.get_signed_cookie('archives')
-        logger.debug('signed cookie: %s', permission)
-        if permission:
-            return create_report(request, *args, **kwargs)
-#            data = {
-#                'flair': choices(kwargs['model']),
-#            }
-#        return Response(data, status=status.HTTP_200_OK)
-    except KeyError:
-        pass
-    return Response(status=status.HTTP_401_UNAUTHORIZED)
+        instance_serializer = serializer(
+          data=request.data,
+          instance=instance,
+          many=False
+        )
+        if instance_serializer.is_valid():
+            instance_serializer.save()
+            return Response({'success':'moderation recorded.'}, status=status.HTTP_200_OK)
+    except Exception as e:
+        logger.error(e)
+        return Response({'detail':e},status=status.HTTP_400_BAD_REQUEST)
 
 class ArchiveAPIView(View):
     model = None
@@ -135,6 +131,6 @@ class ArchiveAPIView(View):
             return archives_list(request, *args, **kwargs, model=self.model)
         return archives_detail(request, *args, **kwargs, model=self.model)
 
-#    @csrf_exempt
     def post(self, request, *args, **kwargs):
-        return report_archive(request, *args, **kwargs, model=self.model)
+        kwargs.update(model=self.model)
+        return report_archive(request, *args, **kwargs)

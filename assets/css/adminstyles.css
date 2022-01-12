@@ -1,0 +1,157 @@
+@media only screen and (min-width: 768px) {
+    #changelist-filter {
+       max-width: fit-content!important;
+    }
+    .img-fluid {
+        max-width: 75%!important;
+    }
+    fieldset:not(.collapsed) h2 {
+        width: 100px!important;
+        text-align: center;
+        flex-shrink: 0; 
+    } 
+    label[for=id_flair] {
+        margin-right: 0px!important;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    #changelist-filter ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        max-width: fit-content;
+    }
+    #changelist-filter li {
+        padding: 0px 10px;
+        align-items: end;
+        font-variant: all-petite-caps;
+    }
+    .img-fluid {
+        max-width: 100%;
+    }
+    fieldset:not(.collapsed) h2 {
+        writing-mode: tb-rl;
+        width:min-content!important;
+        text-align:center;
+    }
+    .editable .container {
+        flex-flow: column;
+    }
+    .field-nsfw .checkbox-row {
+        align-items: end!important;
+        display: flex;
+        flex-flow: row-reverse;
+    }
+    .vCheckboxLabel {
+        padding: 0px!important;
+        margin: 0px!important;
+        margin-top: 5px!important;
+        margin-right: 10px!important;
+    }
+    .editable .container label {
+        min-width: 50px;
+        margin: 5px 0px;
+        margin-right: 10px; 
+    }
+}
+.container {
+    margin-left:10px;
+    width: 100%;
+}
+.module p {
+    padding-left: 0px!important;
+}
+.addlink {
+    display: none;
+}
+.d-none {
+    display: none;
+}
+fieldset,
+fieldset .container {
+    display: flex;
+}
+.editable .container {
+    align-items: baseline;
+}
+.editable .container div {
+    display:flex;
+    align-items: baseline;
+}
+
+.field-post > div {
+    display: flex;
+    flex-direction: column;
+}
+.field-post label,
+.field-metadata label {
+    display: none;
+}
+.field-post .readonly {
+    margin-left:unset!important;
+}
+.field-post p:last-child {
+    margin-bottom: 0px;
+}
+.post-image .container {
+    align-items: center;
+    justify-content: center;
+}
+.field-metadata > div {
+    white-space:break-spaces;
+    display: flex;
+    flex-grow: 1;
+    background-color: white;
+}
+.metadata iframe {
+    width: 100% !important;
+    border-style: unset;
+}    
+.summary .container {
+    flex-direction: column;
+}
+.aligned label {
+    width: unset!important;
+}
+.module.aligned.summary.collapse label {
+    width: 100px!important;
+    flex-shrink: 0;
+}
+.readonly {
+     padding-bottom:10px!important;
+     overflow-x: auto;
+}   
+.summary [class^=field-] > div {
+    display: flex;
+    align-items: baseline;
+}
+.summary .readonly,
+.metadata .readonly {
+    margin-left: unset!important;
+    flex-grow: 1;
+}
+.field-metadata {
+    flex-grow: 1;
+}
+.field-nsfw {
+    order: 2;
+}
+fieldset.collapsed .vCheckboxLabel {
+    display: none;
+}
+.json {
+    font-family: monospace;
+    white-space: break-spaces;
+}
+[for=id_nsfw],
+[for=id_flair] {
+    margin-right: 0.5rem;
+}
+select {
+    margin-right: 0.5rem;
+}
+
+.editable .container {
+    flex-wrap: wrap;
+}
