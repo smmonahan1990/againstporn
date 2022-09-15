@@ -1,9 +1,18 @@
 # demosby.me
 https://demosby.me 
 
+Single-page reddit archive application built in ReactJS and Django Rest Framework. 
+
 Please report bugs to admin@demosby.me.
-##Demo Screenshots 
-![Login Screen](previews/demo_login.png)
-![Login Failure](previews/demo_login_fail.png)
-![Signup Screen](previews/demo_signup.png)
-![Signup Failure](previews/demo_signup_fail.png)
+
+## Frontend
+> The frontend is a fast, interactive and simple single-page application written in Typescript and built with the following technologies: 
+> * [React v17](https://facebook.github.io/react)
+> * [React Router v5](https://github.com/ReactTraining/react-router)
+> * [React Native Async Storage v1](https://github.com/react-native-async-storage/async-storage)
+
+## Demo Screenshots 
+![Screenshot 1](previews/demo_login.png "log in screen")
+![Screenshot 2](previews/demo_login_fail.png)
+![Screenshot 3](previews/demo_sign_up.png)
+![Screenshot 4](previews/demo_signup_fail.png)
