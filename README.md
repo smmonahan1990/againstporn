@@ -12,11 +12,14 @@ Please report bugs to admin@demosby.me.
 > * [React Native Async Storage v1](https://github.com/react-native-async-storage/async-storage)
 
 ## Demo Screenshots 
-![Screenshot 1](previews/demo_login.png "log in screen")
+<!-- ![Screenshot 1](previews/demo_login.png "log in screen") -->
+<img style="width:460px;height:auto;" src="previews/demo_login.png">
 <p style="text-align: center;">Login Screen</p>
-![Screenshot 2](previews/demo_login_fail.png)
+<!-- ![Screenshot 2](previews/demo_login_fail.png) -->
+<img style="width:460px;height:auto;" src="previews/demo_login_fail.png">
 <p style="text-align:center;">Login Fail</p>
-![Screenshot 3](previews/demo_signup_fail.png)
+<!-- ![Screenshot 3](previews/demo_signup_fail.png) -->
+<img style="width:460px;height:auto;" src="previews/signup_fail.png">
 <p style="text-align:center;">Signup Fail</p>
 
 ## Demo Moderation Tools 
