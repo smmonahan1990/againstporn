@@ -14,4 +14,7 @@ Please report bugs to admin@demosby.me.
 ## Demo Screenshots 
 ![Screenshot 1](previews/demo_login.png "log in screen")
 ![Screenshot 2](previews/demo_login_fail.png)
-![Screenshot 4](previews/demo_signup_fail.png)
+![Screenshot 3](previews/demo_signup_fail.png)
+
+## Demo Moderation Tools 
+![Setting flair](previews/VID_20220915005846.mp4)
