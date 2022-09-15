@@ -14,5 +14,4 @@ Please report bugs to admin@demosby.me.
 ## Demo Screenshots 
 ![Screenshot 1](previews/demo_login.png "log in screen")
 ![Screenshot 2](previews/demo_login_fail.png)
-![Screenshot 3](previews/demo_sign_up.png)
 ![Screenshot 4](previews/demo_signup_fail.png)
