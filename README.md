@@ -17,4 +17,4 @@ Please report bugs to admin@demosby.me.
 ![Screenshot 3](previews/demo_signup_fail.png)
 
 ## Demo Moderation Tools 
-![](previews/VID_20220915013750.mp4)
+![*](previews/VID_20220915013750.mp4)
