@@ -13,8 +13,15 @@ Please report bugs to admin@demosby.me.
 
 ## Demo Screenshots 
 ![Screenshot 1](previews/demo_login.png "log in screen")
+<p style="text-align: center;">Login Screen</p>
 ![Screenshot 2](previews/demo_login_fail.png)
+<p style="text-align:center;">Login Fail</p>
 ![Screenshot 3](previews/demo_signup_fail.png)
+<p style="text-align:center;">Signup Fail</p>
 
 ## Demo Moderation Tools 
-![.](previews/toggle_nsfw.gif)
+<!-- ![.](previews/toggle_nsfw.gif) -->
+<p align="center">
+  <!--<img width="460" height="300" src="http://www.fillmurray.com/460/300">-->
+  <img src="previews/toggle_nsfw.gif">
+</p>
