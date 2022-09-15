@@ -13,14 +13,20 @@ Please report bugs to admin@demosby.me.
 
 ## Demo Screenshots 
 <!-- ![Screenshot 1](previews/demo_login.png "log in screen") -->
-<img style="width:460px;height:auto;" src="previews/demo_login.png">
-<p style="text-align: center;">Login Screen</p>
+<p align="center">
+  <img style="width:600px;height:auto;" src="previews/demo_login.png">
+</p>
+<p align="center">Login Screen</p>
 <!-- ![Screenshot 2](previews/demo_login_fail.png) -->
-<img style="width:460px;height:auto;" src="previews/demo_login_fail.png">
+<p align="center">
+  <img style="width:600px;height:auto;" src="previews/demo_login_fail.png">
+</p>
 <p style="text-align:center;">Login Fail</p>
 <!-- ![Screenshot 3](previews/demo_signup_fail.png) -->
-<img style="width:460px;height:auto;" src="previews/signup_fail.png">
-<p style="text-align:center;">Signup Fail</p>
+<p align="center">
+  <img style="width:600px;height:auto;" src="previews/demo_signup_fail.png">
+</p>
+<p align="center">Signup Fail</p>
 
 ## Demo Moderation Tools 
 <!-- ![.](previews/toggle_nsfw.gif) -->
@@ -28,3 +34,4 @@ Please report bugs to admin@demosby.me.
   <!--<img width="460" height="300" src="http://www.fillmurray.com/460/300">-->
   <img src="previews/toggle_nsfw.gif">
 </p>
+<p align="center">Using the inline moderation tools to mark a post "not safe for work."</p>
