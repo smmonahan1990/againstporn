@@ -21,7 +21,7 @@ Please report bugs to admin@demosby.me.
 <p align="center">
   <img style="width:600px;height:auto;" src="previews/demo_login_fail.png">
 </p>
-<p style="text-align:center;">Login Fail</p>
+<p align="center">Login Fail</p>
 <!-- ![Screenshot 3](previews/demo_signup_fail.png) -->
 <p align="center">
   <img style="width:600px;height:auto;" src="previews/demo_signup_fail.png">
